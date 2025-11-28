@@ -7,19 +7,19 @@ const createLoginTracker = (userInfo) => {
   const maxAttempts = 3;
 
   const login = (password) => {
-    if (attempts >= maxAttempts) {
-      return "Account locked. Too many failed attempts.";
-    }
+  if (password === userInfo.password) {
+    return "Login successful.";
+  }
 
-    if (password === userInfo.password) {
-      return "Login successful.";
-    } else {
-      attempts++;
-      return `Incorrect password. You have ${maxAttempts - attempts} attempt(s) left!`;
-    }
-  };
+  attempts++;
+  
+  if (attempts >= maxAttempts) {
+    return "Account locked. Too many failed attempts.";
+  }
 
+  return `Incorrect password. You have ${maxAttempts - attempts} attempt(s) left!`;
   return login;
+}
 };
 
 module.exports = {
