@@ -6,31 +6,19 @@ const createLoginTracker = (userInfo) => {
   let attempts = 0;
   const maxAttempts = 3;
 
-  const login = (password) => {
-  if (password === userInfo.password) {
-    return "Login successful.";
-  }
+  return (password) => {
+    if (password === userInfo.password) {
+      return "Login successful.";
+    }
 
-  attempts++;
-  
-  if (attempts >= maxAttempts) {
-    return "Account locked. Too many failed attempts.";
-  }
+    attempts++;
 
-  return `Incorrect password. You have ${maxAttempts - attempts} attempt(s) left!`;
-  return login;
-}
+    if (attempts >= maxAttempts) {
+      return "Account locked. Too many failed attempts.";
+    }
+
+    return `Incorrect password. You have ${maxAttempts - attempts} attempt(s) left!`;
+  };
 };
 
-module.exports = {
-  ...(typeof createLoginTracker !== 'undefined' && { createLoginTracker })
-};
-
-const user = { username: "jareel", password: "ntamek" };
-
-const loginTracker = createLoginTracker(user);
-
-console.log(loginTracker("wrong"));   // attempt 1
-console.log(loginTracker("wrong"));   // attempt 2
-console.log(loginTracker("wrong"));   // attempt 3, account should lock
-console.log(loginTracker("ntamek"));  // testing with actual password, after account is already locked
+module.exports = { createLoginTracker };
